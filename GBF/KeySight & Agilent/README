@@ -24,6 +24,6 @@ Fonctions disponibless :
 - close()
 - send_command(<commande>)
 - Is_Device_Active(<adresse IP>) -> bool
-- Config(<forme fonction>,<amplitude>,<frequence>,<offset>,<phase>,<duty>,<sym>)
+- Config(<forme fonction>, <amplitude>, <frequence>, <offset>, <phase>, <duty>, <sym>)
 - Output(<ON : bool>)
 - Get_State() -> dic
