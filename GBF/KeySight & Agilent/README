@@ -1,1 +1,14 @@
+Modules à installer :
+- pyvisa ( pip install pyvisa)
+- installer le module ...
 
+Methode de connexion :
+La liaison ordinateur/gbf se fait avec une connection en GPIB 
+
+
+Utilisation du code :
+Pour piloter l'appareil depuis python.
+> Intialiser la lisaison avec l'appareil avec la fonction : KeySight(<Adresse IP>)
+> Si l'adresse est inconnue, ne rien mettre, et effectuer la fonction List_Devices(), qui affiche les appareils connectés
+> Y definir une variable, cette dernière servira pour tout
+> Pour utiliser les fonctions de l'oscillo : <variable>.<fonction>
