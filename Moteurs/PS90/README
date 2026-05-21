@@ -12,4 +12,5 @@ Pour piloter l'appareil depuis python.
 > Intialiser la lisaison avec l'appareil avec la fonction : PS90("COM<n>")
 Le numero du port se trouve en appuyant sur Window+X puis G
 > Y definir une variable, cette dernière servira pour tout
+> Initialiser les axes qui vont se déplacé avec la fonction : Initialisation_Axes(<liste des axes à bouger>)
 > Pour utiliser les fonctions de l'oscillo : <variable>.<fonction>
