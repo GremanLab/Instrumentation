@@ -14,3 +14,21 @@ Le numero du port se trouve en appuyant sur Window+X puis G
 > Y definir une variable, cette dernière servira pour tout
 > Initialiser les axes qui vont se déplacé avec la fonction : Initialisation_Axes(<liste des axes à bouger>)
 > Pour utiliser les fonctions de l'oscillo : <variable>.<fonction>
+
+
+Fonctions disponibless :
+- PS90(<port COM>, <baudrate>, <timeout>)
+- Unit(<unit : "milli|micro|centi|pas">)
+- Affichage(<bool>)
+- close()
+- send_comand(<commande>)
+- Referenciel(<axe:int>, <absolu:bool>, <affichage:bool>)
+- Initialisation_Axe(<axe:int>)
+- Initialisation_Axes(<axes:list>, <absolu:bool>, <affichage:bool>)
+- Move(<axe:int>,<deplacement:float>,<absolu:bool>)
+- Get_Position(<axes:list or None>)
+- Set_Zero(<axis:int>,<value:int>)
+- Move_Zero(<axes>)
+- Conversion_pas_mm(<pas>)
+- Conversion_mm_pas(<mm>)
+- Positionnement(<axes:list>, <set_zero:bool>)
