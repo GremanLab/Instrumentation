@@ -7,4 +7,7 @@ La connection es tétablie quand le logo en haut à gauche est passé en vert.
 L'adresse IP necéssaire à utiliser pour le programme est trouvée en appuyant sur le symbole vert. L'adresse est de la forme : 'TCPIP::169.254.211.73::INSTR'
 
 Utilisation du code :
-Pour piloter l'appareil depuis python :
+Pour piloter l'appareil depuis python.
+> Intialiser la lisaison avec l'appareil avec la fonction : RsInstrument(<insérer adresse IP>)
+> Y definir une variable, cette dernière servira pour tout
+> Pour utiliser les fonctions de l'oscillo : <variable>.<fonction>
