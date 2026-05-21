@@ -11,3 +11,31 @@ Pour piloter l'appareil depuis python.
 > Intialiser la lisaison avec l'appareil avec la fonction : RsInstrument(<insérer adresse IP>)
 > Y definir une variable, cette dernière servira pour tout
 > Pour utiliser les fonctions de l'oscillo : <variable>.<fonction>
+
+Fonctions disponibles :
+- RsInstrument(<adresse IP>)
+- close()
+- TimeOut(<time_out:int>)
+- Limit_Time(<durée (sec):float>)
+- Errors_Reset()
+- Calibers(<channel: int>, <time_scale: float>, <amplitude_scale: float>, <horizontal_pos: float>, <vertical_pos: float>,<trigger: float>)
+- Time_Vector(<t0:float>,<dt:float>,<nb_pts:int>)
+- Average(<samples:int>)
+- Actualise(<affichage:bool>)
+- Vertical_Adjust(<channel>, <Hlimit:float>, <Llimit:float>)
+- Total_Waveform(<channel>)
+- Measure(<channel>)
+- Save_and_Plot(<channel>)
+- Seuil_Value(<seuil:float>, <t0>, <dt>, <data>)
+- Peak_Analisis(<t0>, <dt>, <data>, <renvoi la délimitation en temps:bool>)
+- Save_Oscillo_Settings(<channel>)
+- Set_Oscillo_Settings(<channel>, <settings:dic>)
+- Save_Caliber(<user_name:str>, <file_name:str>)
+- Import_Calibers(<file_name:str>)
+
+Hors Class
+- Export_data(<path>, <data>)
+- Import(<path>) -> <t0>,<dt>,<data> 
+- Add_data(<path>, <data>)
+- Plot(<value>, <time_axis>, <xlabel>, <ylabel>)
+- Redressement(<data>)
