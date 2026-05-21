@@ -1,3 +1,8 @@
+Les appareils sur lesquels les tests ont été réalisés sont : 
+- Keysight 33210A
+- Agilent 33550A
+
+
 Modules à installer :
 - pyvisa ( pip install pyvisa)
 - installer le module ...
@@ -12,3 +17,13 @@ Pour piloter l'appareil depuis python.
 > Si l'adresse est inconnue, ne rien mettre, et effectuer la fonction List_Devices(), qui affiche les appareils connectés
 > Y definir une variable, cette dernière servira pour tout
 > Pour utiliser les fonctions de l'oscillo : <variable>.<fonction>
+
+
+Fonctions disponibless :
+- Initialisation(<adresse IP>)
+- close()
+- send_command(<commande>)
+- Is_Device_Active(<adresse IP>) -> bool
+- Config(<forme fonction>,<amplitude>,<frequence>,<offset>,<phase>,<duty>,<sym>)
+- Output(<ON : bool>)
+- Get_State() -> dic
