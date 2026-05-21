@@ -1,0 +1,18 @@
+Installation de packages :
+1 > Dans la console python écrire : pip install <nom_du_module>
+2 > 
+3 > 
+
+Pour l'importation des modules : 
+1 > L'importation se fait en écrivant dans le code : import <nom_du_module> 
+
+Utilisation : 
+Dans un module importé, il est possible d'utiliser les fonctions et variables définies dedans.
+Pour se faire, utiliser le nom du module avec le nom de la fonction 
+
+Exemple : 
+import math 
+
+valeur = math.log10(100)
+print(valeur)
+# renvoie 2
