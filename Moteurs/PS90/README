@@ -1,1 +1,13 @@
+Modules à installer :
+- pyserial ( pip install pyserial)
+- Installer le logiciel 
 
+
+Methode de connexion :
+Le moteur est à connecter par un cable USB.
+
+Utilisation du code :
+Pour piloter l'appareil depuis python.
+> Intialiser la lisaison avec l'appareil avec la fonction : RsInstrument(<insérer adresse IP>)
+> Y definir une variable, cette dernière servira pour tout
+> Pour utiliser les fonctions de l'oscillo : <variable>.<fonction>
