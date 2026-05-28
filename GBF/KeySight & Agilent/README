@@ -1,8 +1,7 @@
 Les appareils sur lesquels les tests ont été réalisés sont : 
 - Keysight 33210A
 - Agilent 33550A
-
-
+────────────────────────────────────────────────────────────
 Modules à installer :
 - pyvisa ( pip install pyvisa)
 - Telecharger le fichier .exe suivant "IOLibrariesSuite-21.2.207-windows-x64" dans "Telechargements 
@@ -14,26 +13,22 @@ Modules à installer :
       KeySight.KeySight()
 
    ° Une liste d'appareils doivent s'afficher, selctionner celui correspondant au votre.
-
-
+────────────────────────────────────────────────────────────
 Methode de connexion :
 La liaison ordinateur/gbf se fait avec une connection en GPIB
 Pour pouvoir connecter le 
-
-
+────────────────────────────────────────────────────────────
 Utilisation du code :
 Pour piloter l'appareil depuis python.
 > Intialiser la lisaison avec l'appareil avec la fonction : KeySight(<Adresse IP>)
 > Si l'adresse est inconnue, ne rien mettre, et effectuer la fonction List_Devices(), qui affiche les appareils connectés
 > Y definir une variable, cette dernière servira pour tout
 > Pour utiliser les fonctions de l'oscillo : <variable>.<fonction>
-
-
+────────────────────────────────────────────────────────────
 Les appareils sur lesquels le code a été testé sont les : 
 - KeySight 33210A 
 - Agilent 33250A / 33220A
-
-
+────────────────────────────────────────────────────────────
 Fonctions disponibless :
 - Initialisation(<adresse IP>)
 - close()
