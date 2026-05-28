@@ -197,7 +197,7 @@ if __name__ == "__main__":
 # ──────────── Exemple d'utilisation ────────────
     gbf = KeySight() 
     gbf.List_devices()
-    gbf.Initialisation("GPIB2::9::INSTR")
+    gbf.Initialisation("GPIB0::9::INSTR")
 
     gbf.Config(fct="SQU", amp=2.0, freq=1e3)
     gbf.Output(True)
