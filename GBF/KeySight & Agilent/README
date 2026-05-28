@@ -18,6 +18,9 @@ Pour piloter l'appareil depuis python.
 > Y definir une variable, cette dernière servira pour tout
 > Pour utiliser les fonctions de l'oscillo : <variable>.<fonction>
 
+Les appareils sur lesquels le code a été testé sont les : 
+- KeySight 33210A 
+- Agilent 33250A / 33220A
 
 Fonctions disponibless :
 - Initialisation(<adresse IP>)
