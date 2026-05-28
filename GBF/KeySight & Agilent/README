@@ -5,9 +5,15 @@ Les appareils sur lesquels les tests ont été réalisés sont :
 
 Modules à installer :
 - pyvisa ( pip install pyvisa)
-- installer depuis le lien : https://www.keysight.com/zz/en/lib/software-detail/driver/33000-function-arbitrary-waveform-generator-python-instrument-dr.html
-   Ce dernier redirige vers le site de KeySight.
-   Cliquez sur "Download" puis "keysight_kt33000_V1.2.0_python3.10_64-bit_binary_package"
+- Telecharger le fichier .exe suivant "IOLibrariesSuite-21.2.207-windows-x64" dans "Telechargements 
+   ° Le lancer
+   ° Le telechargement du logiciel KeySight devrait etre en train de se faire.
+   ° Une fois le telechargement finis, allez sur Spyder, excutez le code suivant : 
+      
+      import KeySight
+      KeySight.KeySight()
+
+   ° Une liste d'appareils doivent s'afficher, selctionner celui correspondant au votre.
 
 
 Methode de connexion :
