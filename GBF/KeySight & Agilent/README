@@ -1,23 +1,16 @@
-Les appareils sur lesquels les tests ont été réalisés sont : 
-- Keysight 33210A
-- Agilent 33550A
-────────────────────────────────────────────────────────────
 Modules à installer :
 - Telecharger le module python
   ° Dans la console sur Spyder executer : pip install pyvisa
-- Telecharger le fichier .exe suivant "IOLibrariesSuite-21.2.207-windows-x64" dans "Telechargements 
-   ° Le lancer
-   ° Le telechargement du logiciel KeySight devrait etre en train de se faire.
-   ° Une fois le telechargement finis, allez sur Spyder, excutez le code suivant : 
-      
-      import KeySight
-      KeySight.KeySight()
-
-   ° Une liste d'appareils doivent s'afficher, selctionner celui correspondant au votre.
+- Telecharger le driver :
+  ° Aller à l'adresse suivante : https://www.keysight.com/zz/en/lib/software-detail/computer-software/io-libraries-suite-downloads-2175637.html
+  ° Selectionner votre Systeme d'exploitation (Win ou Linux)
+  ° Cliquez sur "Download Windows/Linux x64 IOLS" (en bas de la page)
+  ° Se créer un compte
+  ° Le lancer, le telechargement du logiciel KeySight devrait etre en train de se faire.
+  ° Une fois le telechargement finis, vous pouvez continuer 
 ────────────────────────────────────────────────────────────
 Methode de connexion :
 La liaison ordinateur/gbf se fait avec une connection en GPIB
-Pour pouvoir connecter le 
 ────────────────────────────────────────────────────────────
 Utilisation du code :
 Pour piloter l'appareil depuis python.
