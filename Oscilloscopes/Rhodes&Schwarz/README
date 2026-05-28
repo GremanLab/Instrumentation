@@ -1,20 +1,24 @@
 Modules à installer :
-pip install RsInstrument
-https://www.ni.com/fr-fr/shop/product/ni-visa.html
-
+- Telecharger le module python : 
+  ° pip install RsInstrument
+- Telecharger le driver : 
+  ° Aller sur https://www.rohde-schwarz.com/cz/applications/rs-visa_56280-148812.html
+  ° Telecharge le dossier : RS VISA Setup for Windows (ou Mac en fonction)
+  ° Le lancer pour demarer le telechargement
+────────────────────────────────────────────────────────────
 Methode de connexion :
 L'oscilloscope est à connecter en cable ethernet.
 La connection es tétablie quand le logo en haut à gauche est passé en vert.
 L'adresse IP necéssaire à utiliser pour le programme est trouvée en appuyant sur le symbole vert. L'adresse est de la forme : 'TCPIP::169.254.211.73::INSTR'
-
+────────────────────────────────────────────────────────────
 Utilisation du code :
 Pour piloter l'appareil depuis python.
 > Intialiser la lisaison avec l'appareil avec la fonction : RsInstrument(<insérer adresse IP>)
 > Y definir une variable, cette dernière servira pour tout
 > Pour utiliser les fonctions de l'oscillo : <variable>.<fonction>
-
+────────────────────────────────────────────────────────────
 Les appareils sur lesquels le code a été testé sont les : RTB2004 / RTM3004
-
+────────────────────────────────────────────────────────────
 Fonctions disponibles :
 - RsInstrument(<adresse IP>)
 - close()
