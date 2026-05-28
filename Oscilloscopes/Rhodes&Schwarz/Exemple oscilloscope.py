@@ -1,4 +1,4 @@
-import RTMV2 as RTM
+import RTMB200 as RTM
 import matplotlib.pyplot as plt
 
 
