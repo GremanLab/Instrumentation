@@ -9,8 +9,10 @@ Modules à installer :
    Ce dernier redirige vers le site de KeySight.
    Cliquez sur "Download" puis "keysight_kt33000_V1.2.0_python3.10_64-bit_binary_package"
 
+
 Methode de connexion :
 La liaison ordinateur/gbf se fait avec une connection en GPIB 
+
 
 Utilisation du code :
 Pour piloter l'appareil depuis python.
@@ -19,9 +21,11 @@ Pour piloter l'appareil depuis python.
 > Y definir une variable, cette dernière servira pour tout
 > Pour utiliser les fonctions de l'oscillo : <variable>.<fonction>
 
+
 Les appareils sur lesquels le code a été testé sont les : 
 - KeySight 33210A 
 - Agilent 33250A / 33220A
+
 
 Fonctions disponibless :
 - Initialisation(<adresse IP>)
