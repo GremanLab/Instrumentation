@@ -1,5 +1,6 @@
 Modules à installer :
 pip install RsInstrument
+https://www.ni.com/fr-fr/shop/product/ni-visa.html
 
 Methode de connexion :
 L'oscilloscope est à connecter en cable ethernet.
