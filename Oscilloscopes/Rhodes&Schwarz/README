@@ -12,6 +12,9 @@ Pour piloter l'appareil depuis python.
 > Y definir une variable, cette dernière servira pour tout
 > Pour utiliser les fonctions de l'oscillo : <variable>.<fonction>
 
+Les appareils sur lesquels le code a été testé sont les : RTB2004 / RTM3004
+
+
 Fonctions disponibles :
 - RsInstrument(<adresse IP>)
 - close()
