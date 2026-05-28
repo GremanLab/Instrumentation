@@ -2,6 +2,7 @@ import csv
 import math
 import os
 import time
+from time import process_time_ns
 
 import matplotlib.pyplot as plt
 import RsInstrument as rs
@@ -10,6 +11,7 @@ import RsInstrument as rs
 # ──────────── Adresses par défaut ────────────
 
 IP_address3k    = 'TCPIP::169.254.211.73::INSTR'
+IP_address3k2    = 'TCPIP::169.254.215.130::INSTR'
 IP_address2k    = 'TCPIP::169.254.158.94::INSTR'
 IP_addressLaser = 'TCPIP::169.254.114.3::INSTR'
 
@@ -63,6 +65,10 @@ class RsInstrument:
 
         print("Done")
 
+    def TimeOut(self, time_out: int):
+        """Set the VISA timeout in ms."""
+        self.rtm.visa_timeout = time_out
+
     def close(self):
         """Close the VISA connection."""
         self.rtm.close()
@@ -82,13 +88,9 @@ class RsInstrument:
         self.rtm.write('*CLS')
         time.sleep(0.1)
 
-    def LimitTime(self, limit_time: float):
+    def Limit_Time(self, limit_time: float):
         """Set the minimum time from which waveform data is kept."""
         self.limit_time = limit_time
-
-    def TimeOut(self, time_out: int):
-        """Set the VISA timeout in ms."""
-        self.rtm.visa_timeout = time_out
 
 
     # ──────────── Calibres ────────────
@@ -130,7 +132,7 @@ class RsInstrument:
         if horizontal_pos is not None:
             self.rtm.write(f'TIMebase:POSition {horizontal_pos}')
 
-    def Get_Time(self, t0: float, dt: float, nb_points: int) -> list:
+    def Time_Vector(self, t0: float, dt: float, nb_points: int) -> list:
         """Build the time axis list from t0, dt and point count."""
         return [t0 + dt * i for i in range(nb_points)]
 
@@ -170,7 +172,7 @@ class RsInstrument:
             print("Done")
 
     def Vertical_Adjust(self, channel: int, Hlimit: float = 4.0,
-                        Llimit: float = 3.0, quick: bool = False) -> bool:
+                        Llimit: float = 2.0, quick: bool = False) -> bool:
         """
         Auto-adjust the vertical scale so the signal occupies [Llimit, Hlimit] divisions.
 
@@ -185,52 +187,42 @@ class RsInstrument:
         -------
         bool – True if the scale was changed.
         """
-        saved_average = None
+        saved_average = self.rtm.query('ACQ:AVER:COUN?')
 
-        if quick:
-            self.rtm.write('STOP\nRUN')
-            saved_average = self.rtm.query('ACQ:AVER:COUN?')
-            self.rtm.write('ACQ:AVER:COUN 2')
-            steps_amounts = 1
-        else:
-            steps_amounts = 2
+        self.rtm.write('STOP\nRUN')
 
         t0, dt, data = self.Measure(channel)
         data_abs = Redressement(data)
         maximum = max(data_abs)
+
         scale = self.rtm.query_float(f'CHANnel{channel}:SCALe?')
 
-        if maximum < Llimit * scale and maximum > Hlimit * scale:
+        if maximum > Llimit * scale and maximum < Hlimit * scale:
             # Signal is already well-framed
-            if quick and saved_average is not None:
-                self.rtm.write(f'ACQ:AVER:COUN {saved_average}')
             return False
 
+        if quick :
+            self.rtm.write('ACQ:AVER:COUN 2')
+
         # Coarse upward step if clipping
-        while maximum > 4 * scale:
-            new_scale = scale * 5
-            if new_scale > self.amplimit[1]:
-                break
-            self.rtm.write(f'CHANnel{channel}:SCALe {new_scale}')
-            scale = new_scale
+        while maximum > Hlimit * scale :
+            scale = (self.amplimit[1]*2+scale)/3
+            self.rtm.write(f'CHANnel{channel}:SCALe {scale}')
+
             self.rtm.write('STOP\nRUN')
             t0, dt, data = self.Measure(channel)
             maximum = max(Redressement(data))
 
         # Fine adjustment
-        target = (3 * Hlimit + Llimit) / 4
-        for _ in range(steps_amounts):
-            if quick:
-                time.sleep(1)
-            else:
-                self.Actualise()
+        target = Hlimit
 
-            t0, dt, data = self.Measure(channel)
-            maximum = max(Redressement(data))
-            scale = max(self.amplimit[0], min(self.amplimit[1], maximum / target))
-            self.rtm.write(f'CHANnel{channel}:SCALe {scale}')
+        scale = max(self.amplimit[0], min(self.amplimit[1], maximum / target))
+        self.rtm.write(f'CHANnel{channel}:SCALe {scale}')
 
-        if quick and saved_average is not None:
+        t0, dt, data = self.Measure(channel)
+        maximum = max(Redressement(data))
+
+        if quick :
             self.rtm.write(f'ACQ:AVER:COUN {saved_average}')
 
         return True
@@ -310,6 +302,38 @@ class RsInstrument:
         return None
 
     def Peak_Analisis(self, t0: float, dt: float, data: list,
+                      peak_duration:float, seuil: float,
+                      get_time: bool = True):
+        """
+        Detect peaks in a waveform based on a seuil and peak duration.
+
+        Parameters
+        ----------
+        t0       : float – Start time (s).
+        dt       : float – Sample interval (s).
+        data     : list  – Voltage samples.
+        get_time : bool  – Return times (True) or sample indices (False).
+
+        Returns
+        -------
+        list of [start, end] pairs for the 1st detected peak.
+        """
+        for idx in range(len(data)):
+            if data[idx] >= seuil:
+                break
+        if idx > 100:
+            idx -= 100
+
+        if get_time:
+            t = idx*dt+t0
+            return [t,t+peak_duration]
+
+        else:
+            length = int(((peak_duration-t0)/dt)+1)
+            return [idx, idx+length]
+
+
+    def Math_Peak_Analisis(self, t0: float, dt: float, data: list,
                       get_time: bool = True) -> list:
         """
         Detect peaks in a waveform using a derivative + zero-plateau method.
@@ -478,7 +502,7 @@ def Export_data(path: str, data: list):
     if not (path.endswith(".csv") or path.endswith(".txt")):
         path += ".csv"
 
-    with open(path, "a", newline="") as f:
+    with open(path, "w", newline="") as f:
         for value in data:
             f.write(str(value) + "\n")
 
