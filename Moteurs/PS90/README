@@ -1,12 +1,10 @@
 Modules à installer :
 - pyserial ( pip install pyserial)
 - Installer le logiciel 
-
-
+────────────────────────────────────────────────────────────
 Methode de connexion :
 Le moteur est à connecter par un cable USB.
-
-
+────────────────────────────────────────────────────────────
 Utilisation du code :
 Pour piloter l'appareil depuis python.
 > Intialiser la lisaison avec l'appareil avec la fonction : PS90("COM<n>")
@@ -14,8 +12,7 @@ Le numero du port se trouve en appuyant sur Window+X puis G
 > Y definir une variable, cette dernière servira pour tout
 > Initialiser les axes qui vont se déplacé avec la fonction : Initialisation_Axes(<liste des axes à bouger>)
 > Pour utiliser les fonctions de l'oscillo : <variable>.<fonction>
-
-
+────────────────────────────────────────────────────────────
 Fonctions disponibless :
 - PS90(<port COM>, <baudrate>, <timeout>)
 - Unit(<unit : "milli|micro|centi|pas">)
