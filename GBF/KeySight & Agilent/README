@@ -3,7 +3,8 @@ Les appareils sur lesquels les tests ont été réalisés sont :
 - Agilent 33550A
 ────────────────────────────────────────────────────────────
 Modules à installer :
-- pyvisa ( pip install pyvisa)
+- Telecharger le module python
+  ° Dans la console sur Spyder executer : pip install pyvisa
 - Telecharger le fichier .exe suivant "IOLibrariesSuite-21.2.207-windows-x64" dans "Telechargements 
    ° Le lancer
    ° Le telechargement du logiciel KeySight devrait etre en train de se faire.
