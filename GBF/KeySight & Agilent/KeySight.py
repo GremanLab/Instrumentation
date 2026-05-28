@@ -192,17 +192,25 @@ class KeySight:
 # ──────────── Fin de class ────────────
 
 
-# ──────────── Exemple d'utilisation ────────────
 
 if __name__ == "__main__":
-    with KeySight() as gbf:
-        gbf.List_devices()
-        gbf.Initialisation("GPIB2::9::INSTR")
+# ──────────── Exemple d'utilisation ────────────
+    gbf = KeySight() 
+    gbf.List_devices()
+    gbf.Initialisation("GPIB2::9::INSTR")
 
-        gbf.Config(fct="SQU", amp=2.0, freq=1e3)
-        gbf.Output(True)
+    gbf.Config(fct="SQU", amp=2.0, freq=1e3)
+    gbf.Output(True)
 
-        print(gbf.Get_State())
+    print(gbf.Get_State())
 
-        time.sleep(2)
-        gbf.Output(False)
+    time.sleep(2)
+    gbf.Output(False)
+
+    gbf.close()
+
+# A noter : La variable "gbf" peut etre renommée differenement
+#           En cas d'utilisation de ce code dans un autre fichier que celui là, 
+#           ajouter : 
+#           import KeySight
+#           gbf = KeySight.KeySight() 
