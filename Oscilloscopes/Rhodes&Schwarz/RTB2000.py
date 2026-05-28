@@ -2,7 +2,6 @@ import csv
 import math
 import os
 import time
-from time import process_time_ns
 
 import matplotlib.pyplot as plt
 import RsInstrument as rs
