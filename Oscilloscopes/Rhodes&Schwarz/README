@@ -1,6 +1,6 @@
 Modules à installer :
 - Telecharger le module python : 
-  ° pip install RsInstrument
+  ° Dans la console sur Spyder executer : pip install RsInstrument
 - Telecharger le driver : 
   ° Aller sur https://www.rohde-schwarz.com/cz/applications/rs-visa_56280-148812.html
   ° Telecharge le dossier : RS VISA Setup for Windows (ou Mac en fonction)
