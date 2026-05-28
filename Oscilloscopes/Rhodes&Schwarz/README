@@ -14,7 +14,6 @@ Pour piloter l'appareil depuis python.
 
 Les appareils sur lesquels le code a été testé sont les : RTB2004 / RTM3004
 
-
 Fonctions disponibles :
 - RsInstrument(<adresse IP>)
 - close()
