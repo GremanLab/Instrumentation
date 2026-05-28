@@ -7,15 +7,6 @@ from time import process_time_ns
 import matplotlib.pyplot as plt
 import RsInstrument as rs
 
-
-# ──────────── Adresses par défaut ────────────
-
-IP_address3k    = 'TCPIP::169.254.211.73::INSTR'
-IP_address3k2    = 'TCPIP::169.254.215.130::INSTR'
-IP_address2k    = 'TCPIP::169.254.158.94::INSTR'
-IP_addressLaser = 'TCPIP::169.254.114.3::INSTR'
-
-
 # ──────────── Classe principale ────────────
 
 class RsInstrument:
