@@ -240,7 +240,7 @@ class PS90:
             if state_char == "R":
                 break
 
-            if state_char == "A":
+            if state_char == "A" or state_char == "E":
                 print(f"  → Movement stopped: limit switch triggered on axis {axe}")
                 break
             
