@@ -30,3 +30,5 @@ plt.title("Diagramme de démonstration")
 plt.xlabel("Time (en s)")
 plt.ylabel("Amplitude (en V)")
 plt.show()
+
+oscillo.close()
