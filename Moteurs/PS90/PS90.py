@@ -413,13 +413,15 @@ class PS90:
 # %% ──────────── Exemple d'utilisation ────────────
 
 if __name__ == "__main__":
-    with PS90(COM="COM3") as ps:
-        ps.Unit("milli")
-        ps.Initialisation_Axes(axes=[1, 2], absolu=True)
+    ps = PS90(COM="COM3")
+    ps.Unit("milli")
+    ps.Initialisation_Axes(axes=[1, 2], absolu=True)
 
-        ps.Set_Zero(axis=[1, 2])
+    ps.Set_Zero(axis=[1, 2])
 
-        ps.Move(axe=1, deplacement=5.0)
-        print("Positions:", ps.Get_Position(axes=[1, 2]))
+    ps.Move(axe=1, deplacement=5.0)
+    print("Positions:", ps.Get_Position(axes=[1, 2]))
 
-        ps.Move_Zero(axes=[1, 2])
+    ps.Move_Zero(axes=[1, 2])
+
+    ps.close()
