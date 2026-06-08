@@ -26,7 +26,8 @@ class PS90:
         "E": "Axis has been disabled after motion error",
         "?": "Error, unknown state of axis",
     }
-
+    
+    
     # ──────────── Initialisation ────────────
 
     def __init__(self, COM: str, baudrate: int = 9600, timeout: float = 0.005):
@@ -34,7 +35,9 @@ class PS90:
         self.initialized_axis = []
         self.affichage = True
         self.Unit()
-
+        self.velocity = 301990
+        
+        
     def Unit(self, unit: str = "milli"):
         """
         Set the displacement unit.
@@ -106,7 +109,7 @@ class PS90:
 
     # ──────────── Settings ────────────
 
-    def Referenciel(self, axe: int, absolu: bool, affichage: bool = True):
+    def Referenciel(self, axe: int, absolu: bool = None, affichage: bool = True):
         """
         Set the reference frame for an axis.
 
@@ -116,6 +119,9 @@ class PS90:
         absolu  : bool – True for absolute mode, False for relative.
         affichage : bool – Print confirmation message.
         """
+        if absolu == None:
+            return self.send_command(f"?MODE{axe}")
+            
         if absolu:
             self.send_command(f"ABSOL{axe}")
             if affichage:
@@ -201,6 +207,16 @@ class PS90:
 
         if self.affichage:
             print(f"\nAxis {axe}: [{state_char}] {self.axis_state.get(state_char, '?')}")
+            position = self.Get_Position(axe)
+
+            base = self.Referenciel(axe)
+            
+            if base == 'RELAT':
+                position += deplacement
+            if base == 'ABSOL':
+                position = deplacement
+            print(f"Axis {axe} will go to {position:.2f} {self.unit}")
+            
 
         if state_char == "A":
             print(f"  → Axis {axe} in error state, re-initializing…")
@@ -227,15 +243,37 @@ class PS90:
             if state_char == "A":
                 print(f"  → Movement stopped: limit switch triggered on axis {axe}")
                 break
-
+            
+            position = self.Get_Position(axe)
             if self.affichage and time.time() - t0 > 1.0:
-                print(f"  … [{state_char}] {self.axis_state.get(state_char, '?')}")
+                print(f"  … Actual position : {position:.2f} {self.unit}")
+                # print(f"  … [{state_char}] {self.axis_state.get(state_char, '?')}")
                 t0 = time.time()
 
         position = self.Get_Position(axe)
         if self.affichage:
             print(f"  → Axis {axe} moved to {position:.4f} {self.unit}")
         return position
+
+    
+    def Speed(self, axe, speed):
+        
+        """
+        speed in step/sec (I think)
+            default = 301990
+        """
+        if speed > 301990:
+            print("Value to high, stoped at 301990")
+            speed = 301990
+
+        self.send_command(f"PVEL{axe}={speed}")
+
+    def Joystick(self):
+        self.send_command("JOYON")
+        input("Press 'ENTER' when finish....")
+        self.send_command("JOYOFF")
+        print("Done : Joystick disconected")
+
 
     def Get_Position(self, axes=None):
         """
@@ -270,7 +308,7 @@ class PS90:
                 if attempt == 0:
                     time.sleep(0.5)
         raise RuntimeError(f"Could not read counter for axis {axe}")
-
+        
     def Set_Zero(self, axis=None, value: int = 0):
         """
         Define the current position as the origin (or a given value).
@@ -372,7 +410,7 @@ class PS90:
         return positions[0], positions[1]
 
 
-# ──────────── Exemple d'utilisation ────────────
+# %% ──────────── Exemple d'utilisation ────────────
 
 if __name__ == "__main__":
     with PS90(COM="COM3") as ps:
