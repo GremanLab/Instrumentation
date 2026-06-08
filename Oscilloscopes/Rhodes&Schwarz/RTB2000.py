@@ -2,6 +2,7 @@ import csv
 import math
 import os
 import time
+from itertools import zip_longest
 
 import matplotlib.pyplot as plt
 import RsInstrument as rs
@@ -162,7 +163,7 @@ class RsInstrument:
             print("Done")
 
     def Vertical_Adjust(self, channel: int, Hlimit: float = 4.0,
-                        Llimit: float = 2.0, quick: bool = False) -> bool:
+                        Llimit: float = 3.0, quick: bool = False) -> bool:
         """
         Auto-adjust the vertical scale so the signal occupies [Llimit, Hlimit] divisions.
 
@@ -308,19 +309,24 @@ class RsInstrument:
         -------
         list of [start, end] pairs for the 1st detected peak.
         """
-        for idx in range(len(data)):
+        for idx in range(len(data)-1):
             if data[idx] >= seuil:
                 break
-        if idx > 100:
-            idx -= 100
-
+        if idx > 500:
+            idx -= 500
+        
         if get_time:
             t = idx*dt+t0
             return [t,t+peak_duration]
-
         else:
-            length = int(((peak_duration-t0)/dt)+1)
+            length = int((abs(peak_duration)/dt)+1)
+
+            # Does not get off the list
+            max_length = len(data)-idx
+            if  max_length < length:
+                length = max_length - length - 1 
             return [idx, idx+length]
+
 
 
     def Math_Peak_Analisis(self, t0: float, dt: float, data: list,
@@ -358,7 +364,7 @@ class RsInstrument:
             if val in (0, 1):
                 nb0 += 1
             elif nb0 > seuil_value:
-                entry = (idx - 100) * dt + t0 if get_time else idx - 100
+                entry = (idx - 50) * dt + t0 if get_time else idx - 50
                 one_peak.append(entry)
                 in_peak = True
                 nb0 = 0
@@ -493,8 +499,21 @@ def Export_data(path: str, data: list):
         path += ".csv"
 
     with open(path, "w", newline="") as f:
-        for value in data:
-            f.write(str(value) + "\n")
+        if isinstance(data,list):
+            combined = []
+            for group in zip_longest(*data, fillvalue=""):
+                ligne = ""
+                for item in group:
+                    ligne += str(item)+";"
+                ligne = ligne[:-1]
+                combined.append(ligne)
+                
+            for line in combined:
+                f.write(line + "\n")
+
+        else:
+            for value in data:
+                f.write(str(value) + "\n")
 
 
 def Import(path: str):
@@ -509,22 +528,16 @@ def Import(path: str):
 
     Returns
     -------
-    t0        : float
-    dt        : float
-    data_float: list of float
+    raw_data: list of float
     """
     if not (path.endswith(".txt") or path.endswith(".csv")):
         path += ".csv"
 
     with open(path, mode='r') as f:
         reader = csv.reader(f)
-        rows = list(reader)
+        raw_data = list(reader)
 
-    t0 = float(rows[0][0])
-    dt = float(rows[1][0])
-    data_float = [float(row[0]) for row in rows[2:]]
-
-    return t0, dt, data_float
+    return raw_data
 
 
 def Add_data(path: str, data: list):
@@ -546,21 +559,28 @@ def Add_data(path: str, data: list):
     os.replace(tmp_path, path)
 
 
-def Plot(value: list, time_axis: list,
-         xlabel: str = "Time (s)", ylabel: str = "Amplitude (V)"):
+def Plot(time_axis: list, value: list, title: str, xlabel: str, ylabel: str):
     """
     Plot a waveform.
 
     Parameters
     ----------
+    time_axis : list – X values.
     value     : list – Y values.
-    time_axis : list – X values (time).
+    title     : str  – Title  label.
     xlabel    : str  – X-axis label.
     ylabel    : str  – Y-axis label.
     """
     fig, ax = plt.subplots()
-    ax.plot(time_axis, value)
+    if isinstance(value[0], list):
+        for X in value:
+            ax.plot(time_axis, X)
+    else :
+        ax.plot(time_axis, value)
+        
     ax.set(xlabel=xlabel, ylabel=ylabel)
+    plt.title(title)
+    plt.grid()
     plt.tight_layout()
     plt.show()
 
@@ -570,16 +590,18 @@ def Redressement(data: list) -> list:
     return [abs(v) for v in data]
 
 
-# ──────────── Exemple d'utilisation ────────────
+# %% ──────────── Exemple d'utilisation ────────────
 
 if __name__ == "__main__":
-    with RsInstrument(IP_address3k, limit_time=0.0) as oscillo:
-        oscillo.Calibers(channel=1, time_scale=1e-3, amplitude_scale=0.2)
-        oscillo.Average(32)
-        oscillo.Actualise(affichage=True)
+    oscillo= RsInstrument(IP_address3k, limit_time=0.0)
+    oscillo.Calibers(channel=1, time_scale=1e-3, amplitude_scale=0.2)
+    oscillo.Average(32)
+    oscillo.Actualise(affichage=True)
 
-        t0, dt, data = oscillo.Measure(channel=1)
-        time_axis = oscillo.Get_Time(t0, dt, len(data))
+    t0, dt, data = oscillo.Measure(channel=1)
+    time_axis = oscillo.Time_Vector(t0, dt, len(data))
 
-        Plot(data, time_axis)
-        Export_data("acquisition.csv", data)
+    Plot(data, time_axis)  
+    Export_data("acquisition.csv", data)
+    
+    oscillo.close()
