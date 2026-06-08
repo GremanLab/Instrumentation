@@ -16,7 +16,7 @@ class RsInstrument:
     averaging, auto-scale and data export helpers.
     """
 
-    def __init__(self, IP_ADRESS: str = IP_address3k,
+    def __init__(self, IP_ADRESS: str,
                  time_out: int = 1000,
                  baudrate: int = 9600,
                  limit_time: float = 0.0):
