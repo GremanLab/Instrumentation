@@ -18,7 +18,6 @@ Fonctions disponibless :
 - Unit(<unit : "milli|micro|centi|pas">)
 - Affichage(<bool>)
 - close()
-- send_comand(<commande>)
 - Referenciel(<axe:int>, <absolu:bool>, <affichage:bool>)
 - Initialisation_Axe(<axe:int>)
 - Initialisation_Axes(<axes:list>, <absolu:bool>, <affichage:bool>)
