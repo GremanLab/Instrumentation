@@ -1,10 +1,12 @@
-import RTB2000 as RTM
+import RTM as RTM
 import matplotlib.pyplot as plt
+# %% 
 
 
 # Ce programme est sert d'exemplaire pour une utilisation 
 # du programme de pilotage de l'oscilloscope.
 # 
+# Pour executer une cellule à la fois, Ctrl + Entrée
 
 # Initialisation de l'oscilloscope
 oscillo = RTM.RsInstrument('TCPIP::169.254.158.94::INSTR')
@@ -29,12 +31,10 @@ t0, dt, data = oscillo.Measure(1)
 # %% 
 
 vector_time = oscillo.Time_Vector(t0, dt, len(data))
-plt.plot(vector_time, data)
-plt.title("Diagramme de démonstration")
-plt.xlabel("Time (en s)")
-plt.ylabel("Amplitude (en V)")
-plt.show()
-
+RTM.Plot(vector_time, data, 
+         title = "Diagramme de démonstration",
+         xlabel = "Time (en s)",
+         ylabel = "Amplitude (en V)")
 # %% 
 
 oscillo.close()
