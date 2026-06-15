@@ -593,7 +593,8 @@ def Redressement(data: list) -> list:
 # %% ──────────── Exemple d'utilisation ────────────
 
 if __name__ == "__main__":
-    oscillo= RsInstrument(IP_address3k, limit_time=0.0)
+    IP_adress = 'TCPIP::169.254.211.73::INSTR'
+    oscillo= RsInstrumentIP_adress, limit_time=0.0)
     oscillo.Calibers(channel=1, time_scale=1e-3, amplitude_scale=0.2)
     oscillo.Average(32)
     oscillo.Actualise(affichage=True)
