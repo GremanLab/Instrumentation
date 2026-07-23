@@ -1,0 +1,11 @@
+Codes fournis par Timothée CHEMLA (le 23 juillet 2026).
+
+Comme j'ai vu que vous avez essayer de traduire en python certains codes matlab afin de piloter des moteurs et des oscilloscopes, je vous envoie mon travail:
+- une interface graphique en python qui permet de piloter les moteurs PS90 et PS90+, ainsi que de lancer des scans
+- une librairie python simplifier afin de communiquer avec: les moteurs PS90 et PS90+, et avec les oscilloscopes de la marque Teledyne LeCroy
+
+
+(PS: pour vous aider à vous repérer dans le code, il y a un document word ou pdf (c'est le même) qui vous explique pas mal de choses)
+
+
+Si vous avez des questions n'hésitez pas à revenir vers moi (je ne suis ici seulement jusqu'au 24 juillet donc je vous envoie une autre adresse mail en cas de besoin ultérieur: timothee.chemla@free.fr).
