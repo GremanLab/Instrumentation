@@ -22,7 +22,7 @@ To use graphical interface there is a complete guide: /filename/
 
 
 **Folder Structure**:
-
+ 
 .
 └── hydrophone_handling/
     ├── graphic_interface.py
